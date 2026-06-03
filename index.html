@@ -1,141 +1,295 @@
-<!DOCTYPE html> <!-- Declares this as an HTML5 document -->
-<html lang="en"> <!-- Sets language to English -->
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8"> <!-- Supports all characters (UTF-8 encoding) -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Makes layout responsive on mobiles -->
-<title>Feargus Ball</title> <!-- Page title in the browser tab -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feargus Ball</title>
 
 <style>
-  * {margin: 0; padding: 0; box-sizing: border-box;} /* Reset default spacing + consistent sizing */
+  * {margin: 0; padding: 0; box-sizing: border-box;}
+
   body {
-    font-family: 'Segoe UI', sans-serif; /* Cute typography */
-    display: flex; /* Sidebar + content side-by-side */
-    scroll-behavior: smooth; /* Smooth scroll effect */
-    overflow: hidden; /* Prevents whole-page scrolling */
+    font-family: 'Segoe UI', sans-serif;
     background: #f8ffdd;
+    overflow: hidden;
   }
 
-  /* Sidebar styling */
+  /* ── DESKTOP: sidebar layout ── */
   .sidebar {
-    width: 15%; /* Fixed width */
+    width: 15%;
     min-width: 200px;
-    background: #163d00; /* Dark fierce background */
-    color: #f8ffdd; /* Sidebar text colour */
-    /* padding: 20px; /* Spacing */
-    display: flex; /* Stack elements vertically */
-    flex-direction: column; /* Vertical alignment */
-    height: 100vh; /* Full height of screen */
-    position: fixed; /* Stays stuck on the side */
-    top: 0; /* Aligns to top of screen */
-    left: 0; /* Aligns to left edge */
+    background: #163d00;
+    color: #f8ffdd;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
     justify-content: center;
     text-align: center;
-  }
-
-  .sidebar h2 {
-    text-align: center; /* Centres the title text */
-    color: #f8ffdd; /* Title text is white */
-    margin-bottom: 20px; /* Space below title */
+    z-index: 100;
   }
 
   .sidebar a {
-    text-decoration: none; /* No underline */
-    color: #f8ffdd; /* Softer link colour */
-    padding: 10px; /* Clickable area */
-    margin: 5px 20px; /* Vertical spacing */
-    /* border-radius: 6px; /* Rounded corners */
-    transition: 0.3s; /* Smooth hover effects */
+    text-decoration: none;
+    color: #f8ffdd;
+    padding: 10px;
+    margin: 5px 20px;
+    transition: 0.3s;
     font-size: 200%;
     font-weight: bold;
   }
 
   .sidebar a.active {
-    /* background: #8ace00; /* Highlight colour */
-    color: #8ace00; /* Text contrast */
-    font-weight: bold; /* Extra importance */
+    color: #8ace00;
+    font-weight: bold;
   }
 
-  /* Scrollable content area */
+  /* Hamburger button — hidden on desktop */
+  .hamburger {
+    display: none;
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 200;
+    background: #163d00;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 12px;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 3px;
+    background: #f8ffdd;
+    border-radius: 2px;
+    transition: 0.3s;
+  }
+
+  /* Mobile nav drawer — hidden by default */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #163d00;
+    z-index: 150;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .mobile-nav.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .mobile-nav a {
+    text-decoration: none;
+    color: #f8ffdd;
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    transition: color 0.2s;
+  }
+
+  .mobile-nav a.active,
+  .mobile-nav a:hover {
+    color: #8ace00;
+  }
+
+  /* Close button inside mobile nav */
+  .mobile-nav .close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: #f8ffdd;
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  /* ── SCROLLABLE CONTENT ── */
   .container {
-    margin-left: 15%; /* Leave space for sidebar */
-    height: 100vh; /* Full screen height */
-    /* width: calc(100vw - 220px); /* Remaining width */
+    margin-left: 15%;
+    height: 100vh;
     width: 85%;
-    overflow-y: scroll; /* Scroll vertically inside */
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
   }
 
-  /* Each page section */
   section.typeA {
-    min-height: 100vh; /* Full page height */
-    padding: 60px; /* Space inside */
-    scroll-snap-align: start; /* Snaps section top to view */
-    display: flex; /* Helps centre content */
-    flex-direction: column; /* Vertical alignment */
-    justify-content: center; /* Centred content */
-    overflow-y: auto;
-    border-bottom: 1px solid #163d00;
-  }
-  
-  section.typeB {
-    min-height: 100vh; /* Full page height */
-    padding: 60px; /* Space inside */
-    scroll-snap-align: start; /* Snaps section top to view */
-    display: flex; /* Helps centre content */
-    flex-direction: column; /* Vertical alignment */
-    /* justify-content: center; /* Centred content */
+    min-height: 100vh;
+    padding: 60px;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     overflow-y: auto;
     border-bottom: 1px solid #163d00;
   }
 
-  section.typeA h1 {color: #163d00; font-size: 500%;} /* Headings: space + darker text */
-  section.typeA h3 {margin-bottom: 20px; color: #000000; font-size: 200%; font-weight: 100;}
-  section.typeA p {color: #000000; max-width: 600px; font-size: 200%} /* Paragraphs: readable width */
-  
+  section.typeB {
+    min-height: 100vh;
+    padding: 60px;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    border-bottom: 1px solid #163d00;
+  }
+
+  section.typeA h1 {color: #163d00; font-size: 500%;}
+  section.typeA h3 {margin-bottom: 20px; color: #000; font-size: 200%; font-weight: 100;}
+  section.typeA p  {color: #000; max-width: 600px; font-size: 200%;}
+
   section.typeB h1 {margin-bottom: 20px; color: #163d00; font-size: 300%;}
-  section.typeB p {color: #000000; max-width: 6000px; font-size: 200%;}
+  section.typeB p  {color: #000; max-width: 6000px; font-size: 200%;}
+
+  /* ── MOBILE STYLES ── */
+  @media (max-width: 1000px) {
+
+    body {
+      overflow: hidden;
+    }
+
+    /* Hide sidebar */
+    .sidebar {
+      display: none;
+    }
+
+    /* Show hamburger */
+    .hamburger {
+      display: flex;
+    }
+
+    /* Show mobile nav (as flex, toggled by .open) */
+    .mobile-nav {
+      display: flex;
+    }
+
+    /* Content takes full width */
+    .container {
+      margin-left: 0;
+      width: 100%;
+      height: 100vh;
+    }
+
+    /* Scale down section padding + typography */
+    section.typeA {
+      padding: 24px 20px;
+    }
+
+    section.typeB {
+      padding: 24px 20px;
+    }
+
+    section.typeA h1 { font-size: 13vw; }
+    section.typeA h3 { font-size: 3.5vw; margin-bottom: 12px; }
+    section.typeA p  { font-size: 4vw; }
+
+    section.typeB h1 { font-size: 10vw; margin-bottom: 14px; }
+    section.typeB p  { font-size: 4vw; }
+  }
+
+  @media (max-width: 480px) {
+    section.typeA h1 { font-size: 15vw; }
+    section.typeA h3 { font-size: 4vw; }
+    section.typeA p  { font-size: 4.5vw; }
+
+    section.typeB h1 { font-size: 11vw; }
+    section.typeB p  { font-size: 4.5vw; }
+  }
 </style>
 </head>
 
-<body> <!-- Body starts -->
+<body>
 
-  <div class="sidebar"> <!-- Sidebar container -->
-    <!-- <h2>Title</h2> <!-- Sidebar title -->
-    <a href="#home" class="nav-link active">HOME</a> <!-- Link to section, starts active -->
-    <a href="#about" class="nav-link">ABOUT</a> <!-- Link to About section -->
-    <a href="#projects" class="nav-link">PROJECTS</a> <!-- Link to Projects section -->
-    <a href="#contact" class="nav-link">CONTACT</a> <!-- Link to Contact section -->
+  <!-- Desktop sidebar -->
+  <div class="sidebar">
+    <a href="#home"     class="nav-link active">HOME</a>
+    <a href="#about"    class="nav-link">ABOUT</a>
+    <a href="#projects" class="nav-link">PROJECTS</a>
+    <a href="#contact"  class="nav-link">CONTACT</a>
   </div>
 
-  <div class="container"> <!-- Scrollable section container -->
-    <section id="home", class = "typeA">
-      <h1>FEARGUS <span style="color: #8ace00;">BALL</span></h1>
+  <!-- Hamburger button (mobile only) -->
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- Mobile nav drawer -->
+  <nav class="mobile-nav" id="mobileNav">
+    <button class="close-btn" id="closeNav" aria-label="Close menu">&#x2715;</button>
+    <a href="#home"     class="mobile-link active">HOME</a>
+    <a href="#about"    class="mobile-link">ABOUT</a>
+    <a href="#projects" class="mobile-link">PROJECTS</a>
+    <a href="#contact"  class="mobile-link">CONTACT</a>
+  </nav>
+
+  <!-- Scrollable content -->
+  <div class="container" id="mainContainer">
+    <section id="home" class="typeA">
+      <h1>FEARGUS <span style="color:#8ace00;">BALL</span></h1>
       <h3>STATISTICS PHD STUDENT • SCHOOL OF MATHEMATICS • UNIVERSITY OF BIRMINGHAM</h3>
-    </section> <!-- Section 1 -->
-    <section id="about", class = "typeB">
+    </section>
+    <section id="about" class="typeB">
       <h1>About</h1>
-      <p>I am a Statistics PhD student in the School of Mathematics at the University of Birmingham. My research is on Bayesian inference for Coupled Hidden Markov Models applied to epidemiology. I am currently developing a model for the spread of carbapenem-resistant <emph>Acinetobacter baumannii</emph> in an intensive care unit.</p>
-    </section> <!-- Section 2 -->
-    <section id="projects", class = "typeB"><h1>Projects</h1></section> <!-- Section 3 -->
-    <section id="contact", class = "typeB"><h1>Contact</h1></section> <!-- Section 4 -->
+      <p>I am a Statistics PhD student in the School of Mathematics at the University of Birmingham. My research is on Bayesian inference for Coupled Hidden Markov Models applied to epidemiology. I am currently developing a model for the spread of carbapenem-resistant <em>Acinetobacter baumannii</em> in an intensive care unit.</p>
+    </section>
+    <section id="projects" class="typeB"><h1>Projects</h1></section>
+    <section id="contact"  class="typeB"><h1>Contact</h1></section>
   </div>
 
 <script>
-  const sections = document.querySelectorAll("section"); /* Grab all sections */
-  const navLinks = document.querySelectorAll(".nav-link"); /* Grab all sidebar links */
+  // ── Active link highlighting (desktop sidebar) ──
+  const sections    = document.querySelectorAll("section");
+  const navLinks    = document.querySelectorAll(".nav-link");
+  const mobileLinks = document.querySelectorAll(".mobile-link");
 
-  const observer = new IntersectionObserver(entries => { /* Watch what's visible */
-    entries.forEach(entry => { /* Loop through observed sections */
-      if (entry.isIntersecting) { /* If section currently in view */
-        navLinks.forEach(link => link.classList.remove("active")); /* Remove highlight from all */
-        document.querySelector(`.sidebar a[href="#${entry.target.id}"]`)
-          .classList.add("active"); /* Add highlight to matching link */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove("active"));
+        mobileLinks.forEach(l => l.classList.remove("active"));
+
+        const id = entry.target.id;
+        const deskLink = document.querySelector(`.sidebar a[href="#${id}"]`);
+        const mobLink  = document.querySelector(`.mobile-nav a[href="#${id}"]`);
+        if (deskLink) deskLink.classList.add("active");
+        if (mobLink)  mobLink.classList.add("active");
       }
     });
-  }, {threshold: 0.6}); /* 60% visibility required to count */
+  }, {threshold: 0.6});
 
-  sections.forEach(section => observer.observe(section)); /* Observe each section */
+  sections.forEach(s => observer.observe(s));
+
+  // ── Hamburger / mobile nav toggle ──
+  const hamburger = document.getElementById("hamburger");
+  const mobileNav = document.getElementById("mobileNav");
+  const closeNav  = document.getElementById("closeNav");
+
+  function openMenu()  { mobileNav.classList.add("open"); }
+  function closeMenu() { mobileNav.classList.remove("open"); }
+
+  hamburger.addEventListener("click", openMenu);
+  closeNav.addEventListener("click", closeMenu);
+
+  // Close menu when a link is tapped
+  mobileLinks.forEach(link => {
+    link.addEventListener("click", closeMenu);
+  });
 </script>
 
 </body>
 </html>
-
