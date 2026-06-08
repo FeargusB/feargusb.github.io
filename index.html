@@ -125,7 +125,7 @@
     height: 100vh;
     width: 85%;
     overflow-y: scroll;
-    scroll-snap-type: y mandatory;
+    scroll-snap-type: y proximity;
   }
 
   section.typeA {
@@ -154,7 +154,7 @@
   section.typeA p  {color: #000; max-width: 600px; font-size: 200%;}
 
   section.typeB h1 {margin-bottom: 20px; color: #163d00; font-size: 300%;}
-  section.typeB p  {color: #000; max-width: 6000px; font-size: 200%;}
+  section.typeB p  {color: #000; max-width: 6000px; font-size: 150%; margin-bottom: 1em;}
 
   /* ── MOBILE STYLES ── */
   @media (max-width: 1000px) {
@@ -219,7 +219,7 @@
   <div class="sidebar">
     <a href="#home"     class="nav-link active">HOME</a>
     <a href="#about"    class="nav-link">ABOUT</a>
-    <a href="#projects" class="nav-link">PROJECTS</a>
+    <a href="#research" class="nav-link">RESEARCH</a>
     <a href="#contact"  class="nav-link">CONTACT</a>
   </div>
 
@@ -233,7 +233,7 @@
     <button class="close-btn" id="closeNav" aria-label="Close menu">&#x2715;</button>
     <a href="#home"     class="mobile-link active">HOME</a>
     <a href="#about"    class="mobile-link">ABOUT</a>
-    <a href="#projects" class="mobile-link">PROJECTS</a>
+    <a href="#research" class="mobile-link">RESEARCH</a>
     <a href="#contact"  class="mobile-link">CONTACT</a>
   </nav>
 
@@ -245,10 +245,20 @@
     </section>
     <section id="about" class="typeB">
       <h1>About</h1>
-      <p>I am a Statistics PhD student in the School of Mathematics at the University of Birmingham. My research is on Bayesian inference for Coupled Hidden Markov Models applied to epidemiology. I am currently developing a model for the spread of carbapenem-resistant <em>Acinetobacter baumannii</em> in an intensive care unit.</p>
+      <p>I am a Statistics PhD student in the School of Mathematics at the University of Birmingham, supervised by Panayiota Touloupou and Rowland Seymour. My research focusses on Bayesian methods for coupled hidden Markov models and their applications in epidemiology.</p>
+      
+      <p>Previously, I completed a BSc in Mathematics at the University of Edinburgh in 2024, where my dissertation modelled extreme temperatures in the British Isles.</p>
     </section>
-    <section id="projects" class="typeB"><h1>Projects</h1></section>
-    <section id="contact"  class="typeB"><h1>Contact</h1></section>
+    <section id="research" class="typeB">
+      <h1>Research</h1>
+      <p>Broadly, I work with coupled hidden Markov models (CHMMs) to model disease spread from longitudinal datasets of individual-level diagnostic test results. We model the diagnostic test result as a random variable that is dependent on the true disease status of an individual (the <em>carriage state</em>). Bayesian inference for these models estimates the carriage states and model parameters jointly.</p>
+      <p>My PhD research uses CHMMs to model the spread of <em>Acinetobacter baumannii</em> in an intensive care unit using a dataset with test results for both patients and bed units, which we can consider as two different "types" of individuals. We have extended previous methods to account for an open population of patients, as well as incorporating both types of individuals, which can be modelled using two interacting CHMMs. Further details can be found on the <a href = "RSS2025.pdf">poster</a> I presented at the 2025 RSS Conference.</p>
+      <p>Currently (Spring/Summer 2026), I am working as a research assistant supervised by Panayiota Touloupou as part of the Neglected Tropical Disease Consortium, analysing data on the prevalence of lymphatic filariasis.</p>
+    </section>
+    <section id="contact"  class="typeB">
+      <h1>Contact</h1>
+      <p>My departmental profile page is <a href = "https://www.birmingham.ac.uk/staff/profiles/maths/phd-students/ball-feargus">here</a>, and you can also <a href = mailto:fej406@student.bham.ac.uk>email me</a>, or find me on <a href = https://github.com/FeargusB>GitHub</a> and <a href = https://www.linkedin.com/in/feargus-ball-b84b21372>LinkedIn</a>.
+    </section>
   </div>
 
 <script>
