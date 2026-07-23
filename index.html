@@ -16,7 +16,7 @@
   
   a:link {
     color: #163d00;
-    background-color: transparent;
+    background-color: transparent; 
     text-decoration: underline;
   }
 
@@ -56,6 +56,11 @@
   .sidebar a.active {
     color: #8ace00;
     font-weight: bold;
+  }
+  
+  .sidebar img {
+    display: block;
+    margin: 0 auto;
   }
 
   /* Hamburger button — hidden on desktop */
@@ -129,6 +134,7 @@
     font-size: 2rem;
     cursor: pointer;
     line-height: 1;
+    padding: 10px 12px;
   }
 
   /* ── SCROLLABLE CONTENT ── */
@@ -229,6 +235,7 @@
 
   <!-- Desktop sidebar -->
   <div class="sidebar">
+    <img src="me.jpg" width=60%>
     <a href="#home"     class="nav-link active">HOME</a>
     <a href="#about"    class="nav-link">ABOUT</a>
     <a href="#research" class="nav-link">RESEARCH</a>
@@ -243,6 +250,7 @@
   <!-- Mobile nav drawer -->
   <nav class="mobile-nav" id="mobileNav">
     <button class="close-btn" id="closeNav" aria-label="Close menu">&#x2715;</button>
+    <img src="me.jpg" width=40%>
     <a href="#home"     class="mobile-link active">HOME</a>
     <a href="#about"    class="mobile-link">ABOUT</a>
     <a href="#research" class="mobile-link">RESEARCH</a>
@@ -301,8 +309,11 @@
   const mobileNav = document.getElementById("mobileNav");
   const closeNav  = document.getElementById("closeNav");
 
-  function openMenu()  { mobileNav.classList.add("open"); }
-  function closeMenu() { mobileNav.classList.remove("open"); }
+  // function openMenu()  { mobileNav.classList.add("open"); }
+  // function closeMenu() { mobileNav.classList.remove("open"); }
+  
+  function openMenu()  { mobileNav.classList.add("open"); hamburger.style.display = "none"; }
+  function closeMenu() { mobileNav.classList.remove("open"); hamburger.style.display = "flex"; }
 
   hamburger.addEventListener("click", openMenu);
   closeNav.addEventListener("click", closeMenu);
